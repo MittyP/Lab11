@@ -14,13 +14,13 @@ import javax.swing.JFrame;
 public class Sorting {
 
     /** Increment to sweep the sort. */
-    private static final int SORT_INCREMENT = 10000;
+    private static final int SORT_INCREMENT = 1;
 
     /** Total number of values to try. */
     private static final int TOTAL_SORT_VALUES = 100;
 
     /** Total data size. */
-    private static final int TOTAL_INTEGER_VALUES = 1000000;
+    private static final int TOTAL_INTEGER_VALUES = 100;
 
     /**
      * Bubble sort.
@@ -29,7 +29,16 @@ public class Sorting {
      * @return the sorted array, or null on failure
      */
     static int[] bubbleSort(final int[] array) {
-        return null;
+        for (int j = 0; j < array.length; j++) {
+            for (int i = 1;  i < array.length; i++) {
+                if (array[i] < array[i - 1]) {
+                    int temp = array[i];
+                    array[i] =  array[i - 1];
+                    array[i - 1] = temp;
+                }
+            }
+        }
+        return array;
     }
 
     /**
@@ -39,8 +48,20 @@ public class Sorting {
      * @return the sorted array, or null on failure
      */
     static int[] selectionSort(final int[] array) {
-        return null;
-    }
+        int min;
+        for (int j = 0; j < array.length; j++) {
+            min = array[j];
+            for (int i = 0; i < array.length; i++) {
+                if (array[i] < min) {
+                    min = array[i];
+                    int temp = array[j];
+                    array[j] = array[i];
+                    array[i] = temp;
+                }
+            }
+        }
+        return array;
+        }
 
     /**
      * Merge sort.
@@ -49,7 +70,50 @@ public class Sorting {
      * @return the sorted array, or null on failure
      */
     static int[] mergeSort(final int[] array) {
-        return null;
+        if (array.length == 1) {
+            return array;
+        } else if (array.length == 2) {
+            //swap if unsorted
+            if (array[0] > array[1]) {
+                int temp =  array[0];
+                array[0] = array[1];
+                array[1] = temp;
+            }
+            return array;
+        } else {
+            int[] array1 = new int[array.length / 2];
+            for (int i = 0; i < array.length / 2; i++) {
+                array1[i] = array[i];
+            }
+            int[] array2 = new int[array.length / 2];
+            for (int i = 0; i < array2.length; i++) {
+                array2[i] = array[i + (array.length / 2)];
+            }
+            for (int j = 0; j < array1.length; j++) {
+                for (int i = 1;  i < array1.length; i++) {
+                    if (array1[i] < array1[i - 1]) {
+                        int temp = array1[i];
+                        array1[i] =  array1[i - 1];
+                        array1[i - 1] = temp;
+                    }
+                }
+            } for (int j = 0; j < array2.length; j++) {
+                for (int i = 1;  i < array2.length; i++) {
+                    if (array2[i] < array2[i - 1]) {
+                        int temp = array2[i];
+                        array2[i] =  array2[i - 1];
+                        array2[i - 1] = temp;
+                    }
+                }
+            }
+            for (int i = 0; i < array1.length; i++) {
+                array[i] = array1[i];
+            }
+            for (int i = 0; i < array2.length; i++) {
+                array[i + (array.length / 2)] = array2[i];
+            }
+            return merge(array, 0, array.length / 2, array.length - 1);
+        }
     }
 
     /**
@@ -79,6 +143,24 @@ public class Sorting {
         }
 
         /* TO DO: Merge left and right array here */
+        int countLeft = 0;
+        int countRight = 0;
+        int i = 0;
+        while (countLeft < n1 && countRight < n2) {
+            if (left[countLeft] < right[countRight]) {
+                arr[i] = left[countLeft];
+                i++;
+                countLeft++;
+            } else if (right[countRight] < left[countLeft]) {
+                arr[i] = right[countRight];
+                i++;
+                countRight++;
+            } else {
+                arr[i] = left[countLeft];
+                i++;
+                countLeft++;
+            }
+        }
         return arr;
     }
 
